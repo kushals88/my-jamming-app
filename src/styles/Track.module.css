@@ -1,0 +1,13 @@
+.track{
+    border: solid darkblue 1px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 470px;
+    height: 70px;
+}
+
+.track p{
+    margin-top: 5px;
+    font-weight: bold;
+}
