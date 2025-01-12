@@ -3,33 +3,80 @@ import './App.css';
 import React, { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
-import PlayList from './components/PlayList';
+import PlayListName from './components/PlayListName';
 import TrackList from './components/TrackList';
+import { fetchRequest } from './utils/requestUtil';
 
+const searchEndPoint = "/search";
+const getUserIdEndPoint = "/me";
+const createPlayListEndPoint = "/users/user-id/playlists";
+const addItemsEndPoint = "/playlists/playlist-id/tracks";
 
 function App() {
 
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [playList, setPlayList] = useState('');
+  const [playListName, setPlayListName] = useState('');
   const [trackList, setTrackList] = useState([]);
+  // const [playList, setPlayList] = useState([]);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
 
-    console.log(searchText);
-    const newTrack = {
-      trackName: 'Sugar',
-      artist: 'Maroon 5',
-      album: 'V'
-    };
+    const queryParams = `?q=${encodeURIComponent(searchText)}&type=track&market=US&limit=10`;
 
-    setSearchResults([
-      ...searchResults,
-      newTrack
-    ]);
+    const {data} = await fetchRequest('GET', searchEndPoint, { queryParams });
+    const tracks = data.tracks?.items.map((item) => ({
+      uri: item.uri,
+      trackName: item.name,
+      artist: item.artists.map((artist) => artist.name).join(", "),
+      album: item.album.name
+    }));
+
+    setSearchResults(tracks);
+
+    /*     const newTrack = {
+          trackName: 'Sugar',
+          artist: 'Maroon 5',
+          album: 'V'
+        };
+    
+        setSearchResults([
+          ...searchResults,
+          newTrack
+        ]); */
 
     setSearchText('');
   };
+
+  const getUserId = async () => {
+    const {data} = await fetchRequest('GET', getUserIdEndPoint);
+    return data.id;
+  }
+
+  const createPlayList = async () => {
+    if (trackList.length > 0 && playListName) {
+      const userId = await getUserId();
+      const createEndpoint = createPlayListEndPoint.replace('user-id', userId);
+      const createBody = { "name": playListName };
+      const {data} = await fetchRequest('POST', createEndpoint, { body: createBody });
+      const playListId = data.id;
+      console.log('PlayListId: ', playListId);
+      const addEndpoint = addItemsEndPoint.replace('playlist-id', playListId);
+      const trackURIs = trackList.map((track) => track.uri);
+      const addBody = { "uris": trackURIs};
+      const {responseCode} = await fetchRequest('POST', addEndpoint, { body: addBody });
+      
+      if(responseCode === 201){
+        alert(`${playListName} created successfully!`);
+        setTrackList([]);
+        setPlayListName('');
+      }
+      else{
+        console.log("Error while adding tracks to playlist");
+      }
+      
+    }
+  }
 
   const updateTrackList = (track) => {
     setTrackList((prev) => [...prev, track]);
@@ -47,15 +94,15 @@ function App() {
           <button id="search" name="search" onClick={handleSearch}>Search</button>
         </div>
         <div className="outputContainer">
-          <div>
+          <div className="searchResultContainer">
             <SearchResults searchResults={searchResults} updateTrackList={updateTrackList} />
           </div>
           <div className="playListContainer">
-            <div>
-              <PlayList playList={playList} setPlayList={setPlayList} />
+            <div className="playListNameInput">
+              <PlayListName playList={playListName} setPlayList={setPlayListName} />
             </div>
             <TrackList trackList={trackList} setTrackList={setTrackList} />
-            <button>Save To Spotify</button>
+            <button onClick={createPlayList}>Save To Spotify</button>
           </div>
         </div>
       </main>

@@ -3,11 +3,16 @@
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    width: 470px;
-    height: 70px;
+    width: 500px;
+    height: auto;
+    padding-left: 10px;
 }
 
 .track p{
     margin-top: 5px;
     font-weight: bold;
+}
+
+.track span{
+    margin-bottom: 5px;
 }
