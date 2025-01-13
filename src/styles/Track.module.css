@@ -1,11 +1,13 @@
 .track{
-    border: solid darkblue 1px;
+    border: solid rgb(52, 3, 85) 1px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    width: 500px;
+    width: 100%;
     height: auto;
     padding-left: 10px;
+    letter-spacing: 0.8px;
+    line-height: 1.2 ;
 }
 
 .track p{

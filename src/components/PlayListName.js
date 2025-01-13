@@ -8,7 +8,7 @@ function PlayList({playList, setPlayList}){
             id="playListName" 
             value={playList} 
             onChange={(e)=>setPlayList(e.target.value)} 
-            style={{width:'80%', height:30, border: 'none', borderBottom: '2px solid', outline: 'none', fontSize: '1.2rem'}}/>
+            style={{width:'85%', height:30, border: 'none', borderBottom: '2px solid', outline: 'none', fontSize: '1.2rem'}}/>
     );
 }
 

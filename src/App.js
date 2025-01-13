@@ -18,7 +18,6 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [playListName, setPlayListName] = useState('');
   const [trackList, setTrackList] = useState([]);
-  // const [playList, setPlayList] = useState([]);
 
   const handleSearch = async () => {
 
@@ -91,7 +90,7 @@ function App() {
       <main>
         <div className='sarchContainer'>
           <SearchBar searchText={searchText} setSearchText={setSearchText} />
-          <button id="search" name="search" onClick={handleSearch}>Search</button>
+          <button id="search" name="search" onClick={handleSearch} disabled ={!searchText}>Search</button>
         </div>
         <div className="outputContainer">
           <div className="searchResultContainer">
@@ -102,7 +101,7 @@ function App() {
               <PlayListName playList={playListName} setPlayList={setPlayListName} />
             </div>
             <TrackList trackList={trackList} setTrackList={setTrackList} />
-            <button onClick={createPlayList}>Save To Spotify</button>
+            <button onClick={createPlayList} disabled ={!playListName || !trackList}>Save To Spotify</button>
           </div>
         </div>
       </main>

@@ -4,10 +4,10 @@ h2 {
 
 .searchList{
     list-style: none;
-    padding-left: 10px;
+    padding: 0 10px;
 }
 
 .searchList li{
     display: flex;
-    padding-top: 5px;
+    padding: 5px 0;
 }

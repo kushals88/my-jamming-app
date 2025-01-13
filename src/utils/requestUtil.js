@@ -1,7 +1,7 @@
 export async function fetchRequest(reqMethod, endPoint, { queryParams = '', body = null } = {}) {
 
     const baseURI = "https://api.spotify.com/v1";
-    const accessToken = "BQDurk5j265vWBZtYvrv1hSxt-gkpl_37SR24El5RCZF10UggQqf-JOTjFAWRq4NiRoex0HhkZfSm9M_UHs_qQuhzk1oqp2ayqjakjUx5MOZbw7uAKHlvbf6CE-1FTX2Ni6zEroqiZjqaaUkxPklWAHhg__JUErp-jhmrXBjE2hVIDxPZb63n6T0EXg2NbxkDKtJms6sHTfc18jUDKxAHfrJaZkiJi6ManYZp2gm-TcrNuzZuo67a4_FpPrkYRmXCJmhiJYDsebP9gZkDw";
+    const accessToken = "BQBcsHiOC9aKL_j73kH6lMjDTyX39UtwgZsls52Ptr15tivgi-kVAlhu3T78VCy2AciMSSlc1tiDu_NQQLP-2YAM9nJnFksijRQHYv677osCaCT4GJ7y6YlVH4F1q6Pgsz6SLvyEykiABjbcEywaIPSlR4Rfv3qMAIDfjnAWyl94f_wAtqBHZzzA5RkBeWT_lvU2t3RHF7nrnUEmcqC9h6JVYyQdvW1ygQSqXGQqceXPP5A1LcaeYBbpUXl0Lp0UZWs6y198_lgORgtoEA";
     const url = `${baseURI}${endPoint}${queryParams}`;
     console.log("Request URL: ", url);
     
